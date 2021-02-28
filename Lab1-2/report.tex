@@ -1,0 +1,451 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Homework Assignment Article
+% LaTeX Template
+% Version 1.3.5r (2018-02-16)
+%
+% This template has been downloaded from:
+% /cl.uni-heidelberg.de/~zimmermann/
+%
+% Original author:
+% Victor Zimmermann (zimmermann@cl.uni-heidelberg.de)
+%
+% License:
+% CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+
+\documentclass[a4paper,12pt]{article} % Uses article class in A4 format
+
+%----------------------------------------------------------------------------------------
+%	FORMATTING
+%----------------------------------------------------------------------------------------
+
+\setlength{\parskip}{0pt}
+\setlength{\parindent}{0pt}
+\setlength{\voffset}{-15pt}
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\usepackage[a4paper, margin=2.5cm]{geometry} % Sets margin to 2.5cm for A4 Paper
+\usepackage[onehalfspacing]{setspace} % Sets Spacing to 1.5
+%\linespread{2}
+
+\usepackage[T2A]{fontenc} % Use European encoding
+\usepackage[utf8]{inputenc} % Use UTF-8 encoding
+%\usepackage{lmodern}
+%\usepackage{charter} % Use the Charter font
+%\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+
+\usepackage[english, russian]{babel} % Language hyphenation and typographical rules
+
+\usepackage{amsthm, amsmath, amssymb} % Mathematical typesetting
+\usepackage{marvosym, wasysym} % More symbols
+\usepackage{float} % Improved interface for floating objects
+\usepackage[final, colorlinks = true, 
+            linkcolor = black, 
+            citecolor = black,
+            urlcolor = black]{hyperref} % For hyperlinks in the PDF
+\usepackage{graphicx, multicol} % Enhanced support for graphics
+\usepackage{xcolor} % Driver-independent color extensions
+\usepackage{rotating} % Rotation tools
+\usepackage{listings, style/lstlisting} % Environment for non-formatted code, !uses style file!
+\usepackage{pseudocode} % Environment for specifying algorithms in a natural way
+\usepackage{style/avm} % Environment for f-structures, !uses style file!
+\usepackage{booktabs} % Enhances quality of tables
+
+\usepackage{tikz-qtree} % Easy tree drawing tool
+\tikzset{every tree node/.style={align=center,anchor=north},
+         level distance=2cm} % Configuration for q-trees
+\usepackage{style/btree} % Configuration for b-trees and b+-trees, !uses style file!
+
+\usepackage{titlesec} % Allows customization of titles
+%\renewcommand\thesection{\arabic{section}.} % Arabic numerals for the sections
+\titleformat{\section}{\large}{\thesection}{1em}{}
+%\renewcommand\thesubsection{\alph{subsection})} % Alphabetic numerals for subsections
+\titleformat{\subsection}{\large}{\thesubsection}{1em}{}
+%\renewcommand\thesubsubsection{\roman{subsubsection}.} % Roman numbering for subsubsections
+\titleformat{\subsubsection}{\large}{\thesubsubsection}{1em}{}
+
+\usepackage[all]{nowidow} % Removes widows
+
+\usepackage{csquotes} % Context sensitive quotation facilities
+
+\usepackage[ddmmyyyy]{datetime} % Uses YEAR-MONTH-DAY format for dates
+\renewcommand{\dateseparator}{.} % Sets dateseparator to '-'
+
+\usepackage{fancyhdr} % Headers and footers
+\pagestyle{fancy} % All pages have headers and footers
+\fancyhead{}\renewcommand{\headrulewidth}{0pt} % Blank out the default header
+\fancyfoot[L]{\textsc{}} % Custom footer text
+\fancyfoot[C]{} % Custom footer text
+\fancyfoot[R]{\thepage} % Custom footer text
+
+\newcommand{\note}[1]{\marginpar{\scriptsize \textcolor{red}{#1}}} % Enables comments in red on margin
+
+\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+\usepackage{amsthm, amssymb, amsmath, amsfonts, nccmath}
+\usepackage{nicefrac}
+\usepackage{float} % Improved interface for floating objects
+\usepackage{graphicx, multicol} % Enhanced support for graphics
+\usepackage{pdfrender,xcolor}
+%\usepackage{breqn}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{marvosym, wasysym} % More symbols
+\usepackage{rotating} % Rotation tools
+\usepackage{censor}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\large
+\begin{center}
+    Санкт-­Петербургский политехнический университет\\
+    Высшая школа прикладной математики и\\вычислительной физики, ИПММ\\
+    \vspace{5em}
+    Направление подготовки\\
+    01.03.02 «Прикладная математика и информатика»\\
+    \vspace{3em}
+    Курсовой проект\\
+    по дисциплине «Теория вероятностей»\\
+    на тему «Решение задач по теории вероятностей»
+    \vspace{13em}
+\end{center}
+Выполнил студент гр. 3630102/80201\\
+Кирпиченко С. Р.\\
+Руководитель\\
+Баженов А. Н.
+\vspace{7em}
+\begin{center}
+    Санкт-Петербург\\
+    2021
+\end{center}
+\thispagestyle{empty}
+\newpage
+\tableofcontents
+\addtocontents{toc}{~\hfill\textbf{Страница}\par}
+\newpage
+\listoffigures
+\addtocontents{lof}{~\hfill\textbf{Страница}\par}
+\newpage
+\listoftables
+\addtocontents{lot}{~\hfill\textbf{Страница}\par}
+\thispagestyle{empty}
+\newpage
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+\section{Постановка задачи}
+Для 5 распределений:
+\begin{itemize}
+    \item Нормальное распределение $N(x, 0, 1)$
+    \item Распределение Коши $C(x, 0, 1)$
+    \item Распределение Лапласа $L(x, 0, \frac{1}{\sqrt{2}})$
+    \item Распределение Пуассона $P(k, 10)$
+    \item Равномерное распределение $U(x,-\sqrt{3},\sqrt{3})$
+\end{itemize}
+\begin{enumerate}
+    \item Сгенерировать выборки размером 10, 50 и 1000 элементов. Построить на одном рисунке гистограмму и график плотности распределения.
+    \item Сгенерировать выборки размером 10, 100 и 1000 элементов.
+    Для каждой выборки вычислить следующие статистические характеристики положения данных: $\overline{x}, \mathrm{med}\,x, z_R, z_Q, z_{tr}$. Повторить такие вычисления 1000 раз для каждой выборки и найти среднее характеристик положения и их квадратов:
+    \begin{equation}\label{mean_formula}
+        E(z)=\overline{z}
+    \end{equation}
+    Вычислить оценку дисперсии по формуле:
+    \begin{equation}\label{variance_formula}
+        D(z)=\overline{z^2}-\overline{z}^2
+    \end{equation}
+    Представить полученные данные в виде таблиц.
+\end{enumerate}
+\section{Теория}
+\subsection{Рассматриваемые распределения}
+Плотности:
+\begin{itemize}
+    \item Нормальное распределение
+    \begin{equation}\label{norm}
+        N(x,0,1)=\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}
+    \end{equation}
+    \item Распределение Коши
+    \begin{equation}\label{cauchy}
+        C(x, 0, 1)=\frac{1}{\pi}\frac{1}{x^2+1}
+    \end{equation}
+    \item Распределение Лапласа
+    \begin{equation}\label{laplace}
+        L(x,0,\frac{1}{\sqrt{2}})=\frac{1}{\sqrt{2}}e^{-\sqrt{2}|x|}
+    \end{equation}
+    \item Распределение Пуассона
+    \begin{equation}\label{poisson}
+        P(k, 10)=\frac{10^k}{k!}e^{-10}
+    \end{equation}
+    \item Равномерное распределение
+    \begin{equation}\label{uniform}
+        U(x,-\sqrt{3},\sqrt{3})=
+        \begin{cases}
+        \displaystyle\frac{1}{2\sqrt{3}}&\text{при}\;\;|x|\:\leq\sqrt{3}\\
+        \;\;\;0&\text{при}\;\;|x|\:>\sqrt{3}\\
+        \end{cases}
+    \end{equation}
+\end{itemize}
+\subsection{Гистограмма}
+\subsubsection{Построение гистограммы}
+Множество значений, которое может принимать элемент выборки, разбивается на несколько одинаковых интервалов, откладываемых на горизонтальной оси, над каждым из которых затем рисуется прямоугольник. Высота каждого прямоугольника пропорциональна числу элементов выборки, попадающих в соответствующий интервал. 
+\subsection{Вариационный ряд}
+Последовательность $\displaystyle\{x_{(k)}\}_{k=1}^n$ элементов выборки размера $n$, расположенных в неубывающем порядке, называется вариационным рядом.
+\subsection{Выборочные числовые характеристики}
+\subsubsection{Характеристики положения}
+\begin{itemize}
+    \item Выборочное среднее
+    \begin{equation}\label{mean}
+        \overline{x}=\frac{1}{n}\sum_{i=1}^n x_i
+    \end{equation}
+    \item Выборочная медиана
+    \begin{equation}\label{med}
+        \mathrm{med}\,x = \begin{cases}
+        \displaystyle\;\;\;\;\;x_{(l+1)}&\text{при}\;\;n=2l+1\\
+        \displaystyle\frac{x_{(l)}+x_{(l+1)}}{2}&\text{при}\;\;n=2l
+        \end{cases}
+    \end{equation}
+    \item Полусумма экстремальных выборочных элементов
+    \begin{equation}\label{exhfsum}
+        z_R=\frac{x_{(1)}+x_{(n)}}{2}
+    \end{equation}
+    \item Полусумма квартилей\\
+    Выборочный квартиль $z_p$ порядка $p$ определяется формулой
+    \begin{equation}
+        z_p = \begin{cases}\label{pqv}
+        \displaystyle\;\;x_{([np]+1)}&\text{при}\;\;np\;\text{дробном,}\\
+        \displaystyle\;\;\;\;\;x_{(np)}&\text{при}\;\;np\;\text{целом}
+        \end{cases}
+    \end{equation}
+    Полусумма квартилей
+    \begin{equation}\label{hfsum}
+        z_Q=\frac{z_{1/4}+z_{3/4}}{2}
+    \end{equation}
+    \item Усечённое среднее
+    \begin{equation}\label{trmean}
+        z_{tr}=\frac{1}{n-2r}\sum_{i=r+1}^{n-r}x_{(i)},\;\;r\approx\frac{n}{4}
+    \end{equation}
+\end{itemize}
+\subsubsection{Характеристики рассеивания}
+Выборочная дисперсия
+\begin{equation}\label{svar}
+    D=\frac{1}{n}\sum_{i=1}^n \left(x_i-\overline{x}\right)^2
+\end{equation}
+\section{Реализация}
+Лабораторная работа выполнена на языке Python 3.9 с использованием библиотек numpy, scipy, matplotlib, seaborn.
+\section{Результаты}
+\subsection{Гистограммы и графики плотности распределения}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 15 cm]{normal.pdf}
+    \caption{Нормальное распределение \eqref{norm}}
+    \label{fig:norm}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 15 cm]{koshi.pdf}
+    \caption{Распределение Коши \eqref{cauchy}}
+    \label{fig:cauchy}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 15 cm]{laplace.pdf}
+    \caption{Распределение Лапласа \eqref{laplace}}
+    \label{fig:laplace}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 15 cm]{poisson.pdf}
+    \caption{Распределение Пуассона \eqref{poisson}}
+    \label{fig:poisson}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 15 cm]{uniform.pdf}
+    \caption{Равномерное распределение \eqref{uniform}}
+    \label{fig:uniform}
+\end{figure}
+\subsection{Характеристики положения и рассеяния}
+$\hat{E}(z)$ - оценка, для ее вычисления нужно взять общие знаки в записи чисел 
+$\hat{E}(z)=E(z)\pm\sqrt{D(z)}\cdot K_\alpha$. Вообще говоря, $K_\alpha$ - числовая характеристика конкретного закона распределения, но в данной работе будет использовано $K_\alpha=1$ для всех вычислений.
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|}
+        \hline
+         normal $n$ = 10&$\overline{x}\;\eqref{mean}$&$\mathrm{med}\;x\;\eqref{med}$&$z_R\;\eqref{exhfsum}$&$z_Q\;\eqref{hfsum}$&$z_{tr}\;\eqref{trmean}$\\
+        \hline
+        $E(z)$&-0.017122&-0.021506&-0.006723&0.287411&0.250703\\
+        \hline
+        $D(z)$&0.096772&0.137949&0.182028&0.125442&0.113678\\
+        \hline
+        $\hat{E}(z)$&0&0&0&0&0\\
+        \hline
+        normal $n$ = 100&$\overline{x}$&$\mathrm{med}\;x$&$z_R$&$z_Q$&$z_{tr}$\\
+        \hline
+        $E(z)$&0.002969&0.003794&0.010928&0.021474&0.030476\\
+        \hline
+        $D(z)$&0.009869&0.015401&0.09542&0.012189&0.01184\\
+        \hline
+        $\hat{E}(z)$&0&0&0&0&0\\
+        \hline
+        normal $n$ = 1000 &$\overline{x}$&$\mathrm{med}\;x$&$z_R$&$z_Q$&$z_{tr}$\\
+        \hline
+        $E(z)$&-0.000267&-0.000109&0.008167&0.000739&0.002331\\
+        \hline
+        $D(z)$&0.000985&0.001575&0.066806&0.001219&0.001181\\
+        \hline
+        $\hat{E}(z)$&0&0&0&0&0\\
+        \hline
+    \end{tabular}
+    \caption{Нормальное распределение \eqref{norm}}
+    \label{tab:norm}
+\end{table}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|}
+        \hline
+         cauchy $n$ = 10&$\overline{x}\;\eqref{mean}$&$\mathrm{med}\;x\;\eqref{med}$&$z_R\;\eqref{exhfsum}$&$z_Q\;\eqref{hfsum}$&$z_{tr}\;\eqref{trmean}$\\
+        \hline
+        $E(z)$&0.366552&-0.032657&2.115823&1.06166&0.643818\\
+        \hline
+        $D(z)$&1893.549127&0.340705&47164.182247&4.010975&1.016329\\
+        \hline
+        $\hat{E}(z)$&0&0&0&0&0\\
+        \hline
+        cauchy $n$ = 100&$\overline{x}$&$\mathrm{med}\;x$&$z_R$&$z_Q$&$z_{tr}$\\
+        \hline
+        $E(z)$&-2.405841&0.001288&-123.15451&0.037977&0.043554\\
+        \hline
+        $D(z)$&12940.014738&0.024268&32301517.038689&0.04981&0.025628\\
+        \hline
+        $\hat{E}(z)$&0&0&0&0&0\\
+        \hline
+        cauchy $n$ = 1000 &$\overline{x}$&$\mathrm{med}\;x$&$z_R$&$z_Q$&$z_{tr}$\\
+        \hline
+        $E(z)$&0.885873&-0.00089&450.266753&0.002554&0.002604\\
+        \hline
+        $D(z)$&964.067369&0.002516&236574408.487179&0.004797&0.002512\\
+        \hline
+        $\hat{E}(z)$&0&0&0&0&0\\
+        \hline
+    \end{tabular}
+    \caption{Распределение Коши \eqref{cauchy}}
+    \label{tab:cauchy}
+\end{table}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|}
+        \hline
+         laplace  $n$ = 10&$\overline{x}\;\eqref{mean}$&$\mathrm{med}\;x\;\eqref{med}$&$z_R\;\eqref{exhfsum}$&$z_Q\;\eqref{hfsum}$&$z_{tr}\;\eqref{trmean}$\\
+        \hline
+        $E(z)$&0.006836&0.002158&0.006613&0.305288&0.236799\\
+        \hline
+        $D(z)$&0.10008&0.06789&0.409234&0.120073&0.081557\\
+        \hline
+        $\hat{E}(z)$&0&0&0&0&0\\
+        \hline
+        laplace  $n$ = 100&$\overline{x}$&$\mathrm{med}\;x$&$z_R$&$z_Q$&$z_{tr}$\\
+        \hline
+        $E(z)$&-0.00058&0.000292&0.017743&0.015558&0.019848\\
+        \hline
+        $D(z)$&0.009482&0.005524&0.419544&0.009383&0.005949\\
+        \hline
+        $\hat{E}(z)$&0&0&0&0&0\\
+        \hline
+        laplace  $n$ = 1000 &$\overline{x}$&$\mathrm{med}\;x$&$z_R$&$z_Q$&$z_{tr}$\\
+        \hline
+        $E(z)$&-0.000706&-0.000469&-0.014639&0.001119&0.001636\\
+        \hline
+        $D(z)$&0.000912&0.000518&0.374504&0.000975&0.000594\\
+        \hline
+        $\hat{E}(z)$&0&0&0&0&0\\
+        \hline
+    \end{tabular}
+    \caption{Распределение Лапласа \eqref{laplace}}
+    \label{tab:laplace}
+\end{table}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|}
+        \hline
+         poisson $n$ = 10&$\overline{x}\;\eqref{mean}$&$\mathrm{med}\;x\;\eqref{med}$&$z_R\;\eqref{exhfsum}$&$z_Q\;\eqref{hfsum}$&$z_{tr}\;\eqref{trmean}$\\
+        \hline
+        $E(z)$&10.0068&9.889&10.248&10.9545&10.790833\\
+        \hline
+        $D(z)$&0.961674&1.412679&1.854996&1.29168&1.180888\\
+        \hline
+        $\hat{E}(z)$&0&0&0&0&0\\
+        \hline
+        poisson $n$ = 100&$\overline{x}$&$\mathrm{med}\;x$&$z_R$&$z_Q$&$z_{tr}$\\
+        \hline
+        $E(z)$&9.98998&9.851&10.9185&9.9585&9.94044\\
+        \hline
+        $D(z)$&0.095308&0.218299&0.989608&0.152028&0.116525\\
+        \hline
+        $\hat{E}(z)$&0&0&0&0&0\\
+        \hline
+        poisson $n$ = 1000 &$\overline{x}$&$\mathrm{med}\;x$&$z_R$&$z_Q$&$z_{tr}$\\
+        \hline
+        $E(z)$&10.009293&9.9975&11.696&9.9965&9.875968\\
+        \hline
+        $D(z)$&0.01012&0.002244&0.647084&0.002738&0.011653\\
+        \hline
+        $\hat{E}(z)$&0&0&0&0&9\\
+        \hline
+    \end{tabular}
+    \caption{Распределение Пуассона \eqref{poisson}}
+    \label{tab:poisson}
+\end{table}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|}
+        \hline
+         uniform $n$ = 10&$\overline{x}\;\eqref{mean}$&$\mathrm{med}\;x\;\eqref{med}$&$z_R\;\eqref{exhfsum}$&$z_Q\;\eqref{hfsum}$&$z_{tr}\;\eqref{trmean}$\\
+        \hline
+        $E(z)$&-0.005577&-0.002646&-0.00692&0.310645&0.312055\\
+        \hline
+        $D(z)$&0.101244&0.226895&0.045378&0.129968&0.156618\\
+        \hline
+        $\hat{E}(z)$&0&0&0&0&0\\
+        \hline
+        uniform $n$ = 100&$\overline{x}$&$\mathrm{med}\;x$&$z_R$&$z_Q$&$z_{tr}$\\
+        \hline
+        $E(z)$&0.000136&0.001165&-0.0006&0.015422&0.033033\\
+        \hline
+        $D(z)$&0.01103&0.031839&0.000577&0.015796&0.02234\\
+        \hline
+        $\hat{E}(z)$&0&0&0&0&0\\
+        \hline
+        uniform $n$ = 1000 &$\overline{x}$&$\mathrm{med}\;x$&$z_R$&$z_Q$&$z_{tr}$\\
+        \hline
+        $E(z)$&0.001722&0.002748&-1.5e-05&0.003489&0.005895\\
+        \hline
+        $D(z)$&0.00102&0.002849&6e-06&0.001552&0.001999\\
+        \hline
+        $\hat{E}(z)$&0&0&0&0&0\\
+        \hline
+    \end{tabular}
+    \caption{Равномерное распределение \eqref{uniform}}
+    \label{tab:uniform}
+\end{table}
+\section{Обсуждение}
+\subsection{Гистограмма и график плотности распределения}
+Опираясь на проделанную работу, можно утверждать, что близость гистограммы к графику плотности вероятности закона, по которому была сгенерирована выборка, пропорциональна размеру этой выборки. На малых выборках характер распределения величины практически неузнаваем.\\
+\\
+В большинстве случаев максимумы гистограмм и плотностей распределения не совпали. Иногда прослеживаются всплески гистограмм, например на распределении Коши.
+\subsection{Характеристики положения и рассеяния}
+По данным, приведенным в таблицах, можно заметить аномалию: дисперсия характеристик рассеяния для распределения Коши огромна даже на большой выборке. Это является результатом выбросов, которые можно было наблюдать в итогах предыдущего задания.
+\section*{Примечание}
+С исходным кодом работы и данного отчета можно ознакомиться в репозитории\;\url{https://github.com/Stasychbr/MatStat}
+\end{document}
