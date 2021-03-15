@@ -1,0 +1,355 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Homework Assignment Article
+% LaTeX Template
+% Version 1.3.5r (2018-02-16)
+%
+% This template has been downloaded from:
+% /cl.uni-heidelberg.de/~zimmermann/
+%
+% Original author:
+% Victor Zimmermann (zimmermann@cl.uni-heidelberg.de)
+%
+% License:
+% CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+
+\documentclass[a4paper,12pt]{article} % Uses article class in A4 format
+
+%----------------------------------------------------------------------------------------
+%	FORMATTING
+%----------------------------------------------------------------------------------------
+
+\setlength{\parskip}{0pt}
+\setlength{\parindent}{0pt}
+\setlength{\voffset}{-15pt}
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\usepackage[a4paper, margin=2.5cm]{geometry} % Sets margin to 2.5cm for A4 Paper
+\usepackage[onehalfspacing]{setspace} % Sets Spacing to 1.5
+%\linespread{2}
+
+\usepackage[T2A]{fontenc} % Use European encoding
+\usepackage[utf8]{inputenc} % Use UTF-8 encoding
+%\usepackage{lmodern}
+%\usepackage{charter} % Use the Charter font
+%\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+
+\usepackage[english, russian]{babel} % Language hyphenation and typographical rules
+
+\usepackage{amsthm, amsmath, amssymb} % Mathematical typesetting
+\usepackage{marvosym, wasysym} % More symbols
+\usepackage{float} % Improved interface for floating objects
+\usepackage[final, colorlinks = true, 
+            linkcolor = black, 
+            citecolor = black,
+            urlcolor = black]{hyperref} % For hyperlinks in the PDF
+\usepackage{graphicx, multicol} % Enhanced support for graphics
+\usepackage{xcolor} % Driver-independent color extensions
+\usepackage{rotating} % Rotation tools
+\usepackage{listings, style/lstlisting} % Environment for non-formatted code, !uses style file!
+\usepackage{pseudocode} % Environment for specifying algorithms in a natural way
+\usepackage{style/avm} % Environment for f-structures, !uses style file!
+\usepackage{booktabs} % Enhances quality of tables
+
+\usepackage{tikz-qtree} % Easy tree drawing tool
+\tikzset{every tree node/.style={align=center,anchor=north},
+         level distance=2cm} % Configuration for q-trees
+\usepackage{style/btree} % Configuration for b-trees and b+-trees, !uses style file!
+
+\usepackage{titlesec} % Allows customization of titles
+%\renewcommand\thesection{\arabic{section}.} % Arabic numerals for the sections
+\titleformat{\section}{\large}{\thesection}{1em}{}
+%\renewcommand\thesubsection{\alph{subsection})} % Alphabetic numerals for subsections
+\titleformat{\subsection}{\large}{\thesubsection}{1em}{}
+%\renewcommand\thesubsubsection{\roman{subsubsection}.} % Roman numbering for subsubsections
+\titleformat{\subsubsection}{\large}{\thesubsubsection}{1em}{}
+
+\usepackage[all]{nowidow} % Removes widows
+
+\usepackage{csquotes} % Context sensitive quotation facilities
+
+\usepackage[ddmmyyyy]{datetime} % Uses YEAR-MONTH-DAY format for dates
+\renewcommand{\dateseparator}{.} % Sets dateseparator to '-'
+
+\usepackage{fancyhdr} % Headers and footers
+\pagestyle{fancy} % All pages have headers and footers
+\fancyhead{}\renewcommand{\headrulewidth}{0pt} % Blank out the default header
+\fancyfoot[L]{\textsc{}} % Custom footer text
+\fancyfoot[C]{} % Custom footer text
+\fancyfoot[R]{\thepage} % Custom footer text
+
+\newcommand{\note}[1]{\marginpar{\scriptsize \textcolor{red}{#1}}} % Enables comments in red on margin
+
+\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+\usepackage{amsthm, amssymb, amsmath, amsfonts, nccmath}
+\usepackage{nicefrac}
+\usepackage{float} % Improved interface for floating objects
+\usepackage{graphicx, multicol} % Enhanced support for graphics
+\usepackage{pdfrender,xcolor}
+%\usepackage{breqn}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{marvosym, wasysym} % More symbols
+\usepackage{rotating} % Rotation tools
+\usepackage{censor}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\large
+\begin{center}
+    Санкт-Петербургский политехнический университет\\
+    Высшая школа прикладной математики и\\вычислительной физики, ИПММ\\
+    \vspace{5em}
+    Направление подготовки\\
+    01.03.02 «Прикладная математика и информатика»\\
+    \vspace{3em}
+    Отчет по лабораторной работе №4\\
+    по дисциплине «Математическая статистика»
+    \vspace{15em}
+\end{center}
+Выполнил студент гр. 3630102/80201\\
+Кирпиченко С. Р.\\
+Руководитель\\
+Баженов А. Н.
+\vspace{7em}
+\begin{center}
+    Санкт-Петербург\\
+    2021
+\end{center}
+\thispagestyle{empty}
+\newpage
+\tableofcontents
+\addtocontents{toc}{~\hfill\textbf{Страница}\par}
+\newpage
+\listoffigures
+\addtocontents{lof}{~\hfill\textbf{Страница}\par}
+\newpage
+\listoftables
+\addtocontents{lot}{~\hfill\textbf{Страница}\par}
+\thispagestyle{empty}
+\newpage
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+\section{Постановка задачи}
+Для 5 распределений:
+\begin{itemize}
+    \item Нормальное распределение $N(x, 0, 1)$
+    \item Распределение Коши $C(x, 0, 1)$
+    \item Распределение Лапласа $L(x, 0, \frac{1}{\sqrt{2}})$
+    \item Распределение Пуассона $P(k, 10)$
+    \item Равномерное распределение $U(x,-\sqrt{3},\sqrt{3})$
+\end{itemize}
+Сгенерировать выборки размером 20, 60 и 100 элементов. Построить на них эмпирические функции распределения и ядерные оценки плотности распределения на отрезке $[-4;\,4]$ для непрерывных распределений и на отрезке $[6;\,14]$ для распределения Пуассона.
+\section{Теория}
+\subsection{Эмпирическая функция распределения}
+\subsubsection{Статистический ряд}
+Статистическим рядом назовем совокупность, состоящую из последовательности $\displaystyle\{z_i\}_{i=1}^k$ попарно различных элементов выборки, расположенных по возрастанию, и последовательности $\displaystyle\{n_i\}_{i=1}^k$ частот, с которыми эти элементы содержатся в выборке.
+\subsubsection{Эмпирическая функция распределения}
+Эмпирическая функция распределения (э. ф. р.) - относительная частота события $X < x$, полученная по данной выборке:
+\begin{equation}
+    F_n^*(x)=P^*(X<x).
+\end{equation}
+\subsubsection{Нахождение э. ф. р.}
+\begin{equation}
+    F^*(x)=\frac{1}{n}\sum_{z_i<x}n_i.
+\end{equation}
+$F^*(x)-$ функция распределения дискретной случайной величины $X^*$, заданной таблицей распределения
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+         $X^*$&$z_1$&$z_2$&...&$z_k$\\
+         \hline
+         $P$&$\frac{n_1}{n}$&$\frac{n_2}{n}$&...&$\frac{n_k}{n}$\\
+         \hline
+    \end{tabular}
+    \caption{Таблица распределения}
+    \label{tab:my_label}
+\end{table}
+Эмпирическая функция распределения является оценкой, т. е. приближённым значением, генеральной функции распределения
+\begin{equation}
+    F_n^*(x)\approx F_X(x).
+\end{equation}
+\subsection{Оценки плотности вероятности}
+\subsubsection{Определение}
+Оценкой плотности вероятности $f(x)$ называется функция $\widehat{f}(x)$, построенная на основе выборки, приближённо равная $f(x)$
+\begin{equation}
+    \widehat{f}(x)\approx f(x).
+\end{equation}
+\subsubsection{Ядерные оценки}
+Представим оценку в виде суммы с числом слагаемых, равным объёму выборки:
+\begin{equation}
+    \widehat{f}_n(x)=\frac{1}{n h_n}\sum_{i=1}^n K\left(\frac{x-x_i}{h_n}\right).
+\end{equation}
+$K(u)$ - ядро, т. е. непрерывная функция, являющаяся плотностью вероятности, $x_1,...,x_n$ $-$ элементы выборки, а $\{h_n\}_{n\in\mathbb{N}}$ - последовательность элементов из $\mathbb{R}_+$ такая, что
+\begin{equation}
+    h_n\xrightarrow[n\to\infty]{}0;\;\;\;n h_n\xrightarrow[n\to\infty]{}\infty.
+\end{equation}
+Такие оценки называются непрерывными ядерными.\\\\
+Гауссово ядро:
+\begin{equation}
+    K(u)=\frac{1}{\sqrt{2\pi}}e^{-\frac{u^2}{2}}.
+\end{equation}
+Правило Сильвермана:
+\begin{equation}
+    h_n=\left(\frac{4\hat{\sigma}^5}{3n}\right)^{1/5}\approx1.06\hat{\sigma}n^{-1/5},
+\end{equation}
+где $\hat{\sigma}$ - выборочное стандартное отклонение.
+\section{Реализация}
+Лабораторная работа выполнена на языке Python 3.9 с использованием библиотек numpy, scipy, matplotlib, seaborn.
+\section{Результаты}
+Более насыщенными цветами выделены полученные результаты, более бледными - теоретические функции распределения и плотности вероятности.
+\subsection{Эмпирическая функция распределения}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 14 cm]{normalDistr.pdf}
+    \caption{Нормальное распределение}
+    \label{fig:normalDis}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 15 cm]{koshiDistr.pdf}
+    \caption{Распределение Коши}
+    \label{fig:koshiDis}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 15 cm]{laplaceDistr.pdf}
+    \caption{Распределение Лапласа}
+    \label{fig:laplaceDis}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 15 cm]{poissonDistr.pdf}
+    \caption{Распределение Пуассона}
+    \label{fig:poissonDis}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 15 cm]{uniformDistr.pdf}
+    \caption{Равномерное распределение}
+    \label{fig:uniformDis}
+\end{figure}
+\subsection{Ядерные оценки плотности распределения}
+\subsubsection{Нормальное распределение}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 15 cm]{Normal20numbersKernel.pdf}
+    \caption{Нормальное распределение, 20 чисел}
+    \label{fig:normalKer20}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 15 cm]{Normal60numbersKernel.pdf}
+    \caption{Нормальное распределение, 60 чисел}
+    \label{fig:normalKer60}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 15 cm]{Normal100numbersKernel.pdf}
+    \caption{Нормальное распределение, 100 чисел}
+    \label{fig:normalKer100}
+\end{figure}
+\subsubsection{Распределение Коши}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 15 cm]{Cauchy20numbersKernel.pdf}
+    \caption{Распределение Коши, 20 чисел}
+    \label{fig:koshiKer20}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 15 cm]{Cauchy60numbersKernel.pdf}
+    \caption{Распределение Коши, 60 чисел}
+    \label{fig:koshiKer60}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 15 cm]{Cauchy100numbersKernel.pdf}
+    \caption{Распределение Коши, 100 чисел}
+    \label{fig:koshiKer100}
+\end{figure}
+\subsubsection{Распределение Лапласа}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 15 cm]{Laplace20numbersKernel.pdf}
+    \caption{Распределение Лапласа, 20 чисел}
+    \label{fig:laplaceKer20}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 15 cm]{Laplace60numbersKernel.pdf}
+    \caption{Распределение Лапласа, 60 чисел}
+    \label{fig:laplaceKer60}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 15 cm]{Laplace100numbersKernel.pdf}
+    \caption{Распределение Лапласа, 100 чисел}
+    \label{fig:laplaceKer100}
+\end{figure}
+\subsubsection{Распределение Пуассона}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 15 cm]{Poisson20numbersKernel.pdf}
+    \caption{Распределение Пуассона, 20 чисел}
+    \label{fig:poissonKer20}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 15 cm]{Poisson60numbersKernel.pdf}
+    \caption{Распределение Пуассона, 60 чисел}
+    \label{fig:poissonKer60}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 15 cm]{Poisson100numbersKernel.pdf}
+    \caption{Распределение Пуассона, 100 чисел}
+    \label{fig:poissonKer100}
+\end{figure}
+\subsubsection{Равномерное распределение}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 15 cm]{Uniform20numbersKernel.pdf}
+    \caption{Равномерное распределение, 20 чисел}
+    \label{fig:uniformKer20}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 15 cm]{Uniform60numbersKernel.pdf}
+    \caption{Равномерное распределение, 60 чисел}
+    \label{fig:uniformKer60}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 15 cm]{Uniform100numbersKernel.pdf}
+    \caption{Равномерное распределение, 100 чисел}
+    \label{fig:uniformKer100}
+\end{figure}
+\section{Обсуждение}
+\subsection{Эмпирическая функция и ядерные оценки плотности распределения}
+По графикам эмпирической функции распределения видно, что с увеличением мощности выборки растет точность приближения оценки к теоретической функции распределения вероятности. Хуже всего эмпирическая функция распределения приближает теоретическую на равномерном распределении.
+
+По графикам ядерных оценок видно, что при любом выборе параметра $h_n$ увеличение мощности выборки положительно сказывается на точности оценки. 
+
+Для различных распределений больше подходят различные параметры $h_n$: для нормального, пуассоновского и равномерного распределений большую эффективность показывает параметр $h_n$. Для распределений Коши и Лапласа - $\frac{h_n}{2}$.
+
+Также можно сделать вывод, что увеличении коэффициента при параметре $h_n$ ведет к сглаживанию ядерной оценки: количество перегибов у функции уменьшается, при значении параметра $2h_n$ ядерные оценки становятся сложно различимыми у разных распределений.
+\section*{Примечание}
+С исходным кодом работы и данного отчета можно ознакомиться в репозитории\;\url{https://github.com/Stasychbr/MatStat}
+\end{document}
