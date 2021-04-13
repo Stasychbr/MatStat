@@ -1,0 +1,301 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Homework Assignment Article
+% LaTeX Template
+% Version 1.3.5r (2018-02-16)
+%
+% This template has been downloaded from:
+% /cl.uni-heidelberg.de/~zimmermann/
+%
+% Original author:
+% Victor Zimmermann (zimmermann@cl.uni-heidelberg.de)
+%
+% License:
+% CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+
+\documentclass[a4paper,12pt]{article} % Uses article class in A4 format
+
+%----------------------------------------------------------------------------------------
+%	FORMATTING
+%----------------------------------------------------------------------------------------
+
+\setlength{\parskip}{0pt}
+\setlength{\parindent}{0pt}
+\setlength{\voffset}{-15pt}
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\usepackage[a4paper, margin=2.5cm]{geometry} % Sets margin to 2.5cm for A4 Paper
+\usepackage[onehalfspacing]{setspace} % Sets Spacing to 1.5
+%\linespread{2}
+
+\usepackage[T2A]{fontenc} % Use European encoding
+\usepackage[utf8]{inputenc} % Use UTF-8 encoding
+%\usepackage{lmodern}
+%\usepackage{charter} % Use the Charter font
+%\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+
+\usepackage[english, russian]{babel} % Language hyphenation and typographical rules
+
+\usepackage{amsthm, amsmath, amssymb} % Mathematical typesetting
+\usepackage{marvosym, wasysym} % More symbols
+\usepackage{float} % Improved interface for floating objects
+\usepackage[final, colorlinks = true, 
+            linkcolor = black, 
+            citecolor = black,
+            urlcolor = black]{hyperref} % For hyperlinks in the PDF
+\usepackage{graphicx, multicol} % Enhanced support for graphics
+\usepackage{xcolor} % Driver-independent color extensions
+\usepackage{rotating} % Rotation tools
+\usepackage{listings, style/lstlisting} % Environment for non-formatted code, !uses style file!
+\usepackage{pseudocode} % Environment for specifying algorithms in a natural way
+\usepackage{style/avm} % Environment for f-structures, !uses style file!
+\usepackage{booktabs} % Enhances quality of tables
+
+\usepackage{tikz-qtree} % Easy tree drawing tool
+\tikzset{every tree node/.style={align=center,anchor=north},
+         level distance=2cm} % Configuration for q-trees
+\usepackage{style/btree} % Configuration for b-trees and b+-trees, !uses style file!
+
+\usepackage{titlesec} % Allows customization of titles
+%\renewcommand\thesection{\arabic{section}.} % Arabic numerals for the sections
+\titleformat{\section}{\large}{\thesection}{1em}{}
+%\renewcommand\thesubsection{\alph{subsection})} % Alphabetic numerals for subsections
+\titleformat{\subsection}{\large}{\thesubsection}{1em}{}
+%\renewcommand\thesubsubsection{\roman{subsubsection}.} % Roman numbering for subsubsections
+\titleformat{\subsubsection}{\large}{\thesubsubsection}{1em}{}
+
+\usepackage[all]{nowidow} % Removes widows
+
+\usepackage{csquotes} % Context sensitive quotation facilities
+
+\usepackage[ddmmyyyy]{datetime} % Uses YEAR-MONTH-DAY format for dates
+\renewcommand{\dateseparator}{.} % Sets dateseparator to '-'
+
+\usepackage{fancyhdr} % Headers and footers
+\pagestyle{fancy} % All pages have headers and footers
+\fancyhead{}\renewcommand{\headrulewidth}{0pt} % Blank out the default header
+\fancyfoot[L]{\textsc{}} % Custom footer text
+\fancyfoot[C]{} % Custom footer text
+\fancyfoot[R]{\thepage} % Custom footer text
+
+\newcommand{\note}[1]{\marginpar{\scriptsize \textcolor{red}{#1}}} % Enables comments in red on margin
+
+\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+\usepackage{amsthm, amssymb, amsmath, amsfonts, nccmath}
+\usepackage{nicefrac}
+\usepackage{float} % Improved interface for floating objects
+\usepackage{graphicx, multicol} % Enhanced support for graphics
+\usepackage{pdfrender,xcolor}
+%\usepackage{breqn}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{marvosym, wasysym} % More symbols
+\usepackage{rotating} % Rotation tools
+\usepackage{censor}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\DeclareMathOperator{\cov}{cov}
+\DeclareMathOperator{\med}{med}
+\DeclareMathOperator{\sign}{sign}
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\large
+\begin{center}
+    Санкт-Петербургский политехнический университет\\
+    Высшая школа прикладной математики и\\вычислительной физики, ИПММ\\
+    \vspace{5em}
+    Направление подготовки\\
+    01.03.02 «Прикладная математика и информатика»\\
+    \vspace{3em}
+    Отчет по лабораторной работе №7\\
+    по дисциплине «Математическая статистика»
+    \vspace{15em}
+\end{center}
+Выполнил студент гр. 3630102/80201\\
+Кирпиченко С. Р.\\
+Руководитель\\
+Баженов А. Н.
+\vspace{7em}
+\begin{center}
+    Санкт-Петербург\\
+    2021
+\end{center}
+\thispagestyle{empty}
+\newpage
+\tableofcontents
+\addtocontents{toc}{~\hfill\textbf{Страница}\par}
+\newpage
+\listoftables
+\addtocontents{lot}{~\hfill\textbf{Страница}\par}
+\thispagestyle{empty}
+\newpage
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+\section{Постановка задачи}
+Сгенерировать выборку объёмом 100 элементов для нормального распределения $N(x,0,1)$. По сгенерированной выборке оценить параметры $\mu$ и $\sigma$ нормального закона методом максимального правдоподобия.
+В качестве основной гипотезы $H_0$ будем считать, что сгенерированное
+распределение имеет вид $N(x,\hat{\mu},\hat{\sigma})$. Проверить основную гипотезу, используя критерий согласия $\chi^2$. В качестве уровня значимости взять $\alpha=0.05$. Привести таблицу вычислений $\chi^2$.
+
+Исследовать точность (чувствительность) критерия $\chi^2$ - сгенерировать выборки равномерного распределения и распределения Лапласа малого объема (20 элементов). Проверить их на нормальность.
+\section{Теория}
+\subsection{Метод максимального правдоподобия}
+$L(x_1,...,x_n,\theta)\;-$ функция правдоподобия(ФП), рассматриваемая как функция неизвестного параметра $\theta$:
+\begin{equation}
+    L(x_1,...,x_n,\theta)=f(x_1,\theta)f(x_2,\theta)...f(x_n,\theta).
+\end{equation}
+\textit{Оценка максимального правдоподобия}:
+\begin{equation}
+    \widehat{\theta}_{\text{мп}}=\arg{\max_\theta{L(x_1,...,x_n,\theta)}}.
+\end{equation}
+Система уравнений правдоподобия (в случае дифференцируемости функции правдоподобия):
+\begin{equation}
+    \frac{\partial L}{\partial\theta_k}=0\;\;\text{или}\;\;\frac{\partial\ln{L}}{\partial\theta_k}=0,\;\;k=1,...,m.
+\end{equation}
+\subsection{Проверка гипотезы о законе распределения генеральной совокупности. Метод хи-квадрат}
+Выдвинута гипотеза $H_0$ о генеральном законе распределения с функцией
+распределения $F(x)$.\\\\
+Рассматриваем случай, когда гипотетическая функция распределения $F(x)$ не содержит неизвестных параметров.
+\subsubsection*{Правило проверки гипотезы о законе распределения по методу $\chi^2$}
+\begin{enumerate}
+    \item Выбираем уровень значимости $\alpha$.
+    \item По таблице \cite[с. 358]{book1} находим квантиль $\chi_{1-\alpha}^2(k-1)$ распределения хи-квадрат с $k-1$ степенями свободы порядка $1-\alpha$.
+    \item Вычисляем вероятности $p_i=P(X\in\Delta_i), i = 1,...,k$, с помощью гипотетической функции распределения $F(x)$.
+    \item Находим частоты $n_i$ попадания элементов выборки в подмножества $\Delta_i,i=1,...,k$.
+    \item Вычисляем выборочное значение статистики критерия $\chi^2$:
+        \begin{equation*}
+            \chi^2_{\text{В}}=\sum_{i=1}^k\frac{(n_i-np_i)^2}{np_i}.
+        \end{equation*}
+    \item Сравниваем $\chi^2_{\text{В}}$ и квантиль $\chi_{1-\alpha}^2(k-1)$.
+        \begin{enumerate}
+            \item Если $\chi^2_{\text{В}}<\chi_{1-\alpha}^2(k-1)$, то гипотеза $H_0$ на данном этапе проверки принимается.
+            \item Если $\chi^2_{\text{В}}\geq\chi_{1-\alpha}^2(k-1)$, то гипотеза $H_0$ отвергается, выбирается одно из альтернативных распределений, и процедура проверки повторяется.
+
+        \end{enumerate}
+\end{enumerate}
+
+\section{Реализация}
+Лабораторная работа выполнена на языке Python 3.9 с использованием библиотек numpy, scipy, matplotlib, seaborn.
+\section{Результаты}
+\subsection{Проверка гипотезы о законе распределения генеральной совокупности. Метод хи-квадрат}
+Метод максимального правдоподобия:
+$$\hat{\mu}\approx0.08\quad\hat{\sigma}\approx1.08$$
+Критерий согласия $\chi^2$:
+\begin{enumerate}
+    \item Количество промежутков $k=1.72\sqrt[3]{n}=8$
+    \item Уровень значимости $\alpha=0.05$
+    \item $\chi^2_{1-\alpha}(k-1)=\chi^2_{0.95}(7)=14.07$
+\end{enumerate}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|c|}
+    \hline
+    i&$\Delta_i$&$n_i$&$p_i$&$np_i$&$n_i-np_i$&$\dfrac{(n_i-np_i)^2}{np_i}$\\
+    \hline
+    1&$(-\infty,\;-1.1)$&11&0.138&13.8&-2.8&0.5674\\
+    \hline
+    2&$(-1.1,\;-0.73)$&9&0.0886&8.86&0.14&0.0022\\
+    \hline
+    3&$(-0.73,\;-0.37)$&14&0.114&11.4&2.6&0.5928\\
+    \hline
+    4&$(-0.37,\;0.0)$&16&0.1309&13.09&2.91&0.6478\\
+    \hline
+    5&$(0.0,\;0.37)$&9&0.1341&13.41&-4.41&1.4486\\
+    \hline
+    6&$(0.37,\;0.73)$&11&0.1225&12.25&-1.25&0.1282\\
+    \hline
+    7&$(0.73,\;1.1)$&15&0.0999&9.99&5.01&2.5094\\
+    \hline
+    8&$(1.1,\;\infty)$&15&0.172&17.2&-2.2&0.2815\\
+    \hline
+    $\Sigma$&--&100&1&100&0&6.18=$\chi^2_B$\\
+    \hline
+    \end{tabular}
+    \caption{Проверка гипотезы $H_0$ на нормальной выборке}
+    \label{tab:tab1}
+\end{table}
+$\chi^2_B<\chi^2_{0.95}(7)\Rightarrow$ на текущем этапе гипотеза $H_0$ о том, что генеральная выборка имеет распределение $N(x,\hat{\mu},\hat{\sigma})$, принимается.
+\subsection{Исследование на чувствительность}
+Рассмотрим выборку, сгенерированную по распределению Лапласа.
+$$\hat{\mu}\approx-0.09\quad\hat{\sigma}\approx0.89$$
+Критерий согласия $\chi^2$:
+\begin{enumerate}
+    \item Количество промежутков $k=1.72\sqrt[3]{n}=5$
+    \item Уровень значимости $\alpha=0.05$
+    \item $\chi^2_{1-\alpha}(k-1)=\chi^2_{0.95}(4)=9.49$
+\end{enumerate}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|c|}
+    \hline
+    i&$\Delta_i$&$n_i$&$p_i$&$np_i$&$n_i-np_i$&$\dfrac{(n_i-np_i)^2}{np_i}$\\
+    \hline
+    1&$(\infty,\;-1.1)$&4&0.1292&2.58&1.42&0.7753\\
+    \hline
+    2&$(-1.1,\;-0.37)$&2&0.2495&4.99&-2.99&1.7916\\
+    \hline
+    3&$(-0.37,\;0.37)$&8&0.3171&6.34&1.66&0.4336\\
+    \hline
+    4&$(0.37,\;1.1)$&4&0.213&4.26&-0.26&0.0159\\
+    \hline
+    5&$(1.1,\;\infty)$&2&0.0912&1.82&0.18&0.0171\\
+    \hline
+    $\Sigma$&--&20&1.0&20.0&0&3.03$=\chi^2_B$\\
+    \hline
+    \end{tabular}
+    \caption{Проверка гипотезы $H_0$ на выборке, сгенерированной по распределению Лапласа}
+    \label{tab:tab2}
+\end{table}
+Рассмотрим выборку, сгенерированную по равномерному распределению.
+$$\hat{\mu}\approx-0.09\quad\hat{\sigma}\approx0.88$$
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|c|}
+    \hline
+    i&$\Delta_i$&$n_i$&$p_i$&$np_i$&$n_i-np_i$&$\dfrac{(n_i-np_i)^2}{np_i}$\\
+    \hline
+    1&$(\infty,\;-1.1)$&3&0.127&2.54&0.46&0.0836\\
+    \hline
+    2&$(-1.1,\;-0.37)$&6&0.2516&5.03&0.97&0.1863\\
+    \hline
+    3&$(-0.37,\;0.37)$&4&0.3207&6.41&-2.41&0.9087\\
+    \hline
+    4&$(0.37,\;1.1)$&5&0.2128&4.26&0.74&0.1297\\
+    \hline
+    5&$(1.1,\;\infty)$&2&0.0879&1.76&0.24&0.0333\\
+    \hline
+    $\Sigma$&--&20&1.0&20.0&0&1.34$=\chi^2_B$\\
+    \hline
+    \end{tabular}
+    \caption{Проверка гипотезы $H_0$ на выборке, сгенерированной по равномерному распределению}
+    \label{tab:tab3}
+\end{table}
+Видим, что в обоих случаях гипотеза принимается.
+\section{Обсуждение}
+Оценки максимального правдоподобия показали свою состоятельность на выборке из 100 элементов, распределенной нормально. Погрешность найденных параметров наблюдается во втором знаке после запятой.
+
+На малых выборках метод хи-квадрат при проверке на нормальность не различает выборки, распределенные равномерно и по закону Лапласа, подтверждая гипотезу в обоих случаях. Это обусловлено теоремой К. Пирсона: статистика критерия $\chi^2$ асимптотически при $n\rightarrow\infty$ распределена по закону $\chi^2$ с $k-1$ степенями свободы. То есть на малых выборках теория ничего не гарантирует.
+\section*{Примечание}
+С исходным кодом работы и данного отчета можно ознакомиться в репозитории\;\url{https://github.com/Stasychbr/MatStat}
+\newpage
+\begin{thebibliography}{9}
+\bibitem{book1} 
+ Максимов Ю.Д. Математика. Теория и практика по математической статистике. Конспект-справочник по теории вероятностей : учеб. пособие /
+Ю.Д. Максимов; под ред. В.И. Антонова. $-$ СПб. : Изд-во Политехн.
+ун-та, 2009. $-$ 395 с. (Математика в политехническом университете).
+\end{thebibliography}
+\end{document}
