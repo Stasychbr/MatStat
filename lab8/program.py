@@ -26,7 +26,7 @@ def smooth_signal(signal):
 
 
 def get_hist_fig(signal):
-    return sb.histplot(signal, stat="count", bins=10)
+    return sb.histplot(signal, stat="count", bins=20)
 
 
 def get_intervals(axis):
@@ -69,7 +69,7 @@ def distribute_points(signal):
 
 def fisher(noise_dom, signal, trans_dom):
     groups = [noise_dom[0][1], trans_dom[0][1], signal[1], trans_dom[1][1], noise_dom[1][1]]
-    splits = [7, 4, 4, 4, 7]
+    splits = [10, 10, 10, 10, 10]
     k = len(splits)
     fisher = np.zeros(k)
     for k in range(len(splits)):
@@ -93,8 +93,14 @@ plt.style.use("seaborn")
 signal = read_cluster(228)
 signal = smooth_signal(signal)
 noise, signal, trans = distribute_points(signal)
+plt.gcf().clear()
+for i in range(5):
+    if i == 0 or i == 4:
+        plt.plot(noise[0 if i == 0 else 1][0], noise[0 if i == 0 else 1][1], 'g', label='Шум' if i == 0 else None)
+    elif i == 1 or i == 3:
+        plt.plot(trans[0 if i == 1 else 1][0], trans[0 if i == 1 else 1][1], color='yellow', label='Переход' if i == 1 else None)
+    else:
+        plt.plot(signal[0], signal[1], 'r', label='Сигнал')
+plt.legend(facecolor='white', frameon=True)
+plt.savefig('areas.pdf')
 print(fisher(noise, signal, trans))
-
-
-
-
