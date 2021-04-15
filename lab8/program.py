@@ -102,5 +102,8 @@ for i in range(5):
     else:
         plt.plot(signal[0], signal[1], 'r', label='Сигнал')
 plt.legend(facecolor='white', frameon=True)
+plt.title('Сигнал ' + str(228))
+plt.xlabel('Момент времени')
+plt.ylabel('Амплитуда')
 plt.savefig('areas.pdf')
 print(fisher(noise, signal, trans))
