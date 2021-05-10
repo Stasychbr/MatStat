@@ -1,0 +1,235 @@
+\documentclass[a4paper]{article}
+\addtolength{\hoffset}{-2.25cm}
+\addtolength{\textwidth}{4.5cm}
+\addtolength{\voffset}{-3.25cm}
+\addtolength{\textheight}{5cm}
+\setlength{\parindent}{15pt}
+
+\usepackage[unicode=true, colorlinks=false, hidelinks]{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[english, russian]{babel}
+\usepackage{mathtext}
+\usepackage[T2A, TS1]{fontenc}
+\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+\usepackage{amsthm, amssymb, amsmath, amsfonts, nccmath}
+\usepackage{nicefrac}
+\usepackage{epstopdf}
+\usepackage[export]{adjustbox}
+\usepackage{float} % Improved interface for floating objects
+\usepackage{graphicx, multicol} % Enhanced support for graphics
+\usepackage{pdfrender,xcolor}
+\usepackage{breqn}
+\usepackage{mathtools}
+\usepackage{titling}
+\usepackage{bm}
+\usepackage{centernot}
+\usepackage[cal=boondoxo,calscaled=.96]{mathalpha}
+\usepackage{marvosym, wasysym} % More symbols
+\usepackage{rotating} % Rotation tools
+\usepackage{censor} % Facilities for controlling restricted text
+\usepackage{indentfirst}
+
+\DeclareMathOperator{\cov}{cov}
+\DeclareMathOperator{\med}{med}
+\DeclareMathOperator{\sign}{sign}
+
+\usepackage{array}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead{}\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[L]{}
+\fancyhead{}
+\fancyfoot{}
+\fancyfoot[R]{\thepage}
+\begin{document}
+\large
+\begin{center}
+    Санкт-Петербургский политехнический университет\\
+    Высшая школа прикладной математики и\\вычислительной физики, ИПММ\\
+    \vspace{3em}
+    Направление подготовки\\
+    01.03.02 «Прикладная математика и информатика»\\
+    \vspace{10em}
+    \Large
+    Отчет по курсовой работе \\
+    по дисциплине «Математическая статистика»\\
+    на тему «Метод главных компонент»
+    \vspace{19em}
+    \large
+\end{center}
+Выполнил студент гр. 3630102/80201\\
+Кирпиченко С. Р.\\
+Руководитель\\
+Баженов А. Н.
+\vspace{10em}
+\begin{center}
+    Санкт-Петербург\\
+    2021
+\end{center}
+\thispagestyle{empty}
+\newpage
+\tableofcontents
+\addtocontents{toc}{~\hfill\textbf{Страница}\par}
+\newpage
+\listoffigures
+\addtocontents{lof}{~\hfill\textbf{Страница}\par}
+\newpage
+\listoftables
+\addtocontents{lot}{~\hfill\textbf{Страница}\par}
+\newpage
+\section{Постановка задачи}
+
+\section{Теория}
+\subsection{Постановка задачи метода главных компонент}
+В компонентном анализе ищется такое линейное преобразование 
+\begin{equation}\label{preobr}
+    \widehat{x}=L\widehat{f},
+\end{equation}
+где $\widehat{x}=(x_1,\hdots,x_d),\;\widehat{f}=(f_1,\hdots,f_d)$ - векторы-столбцы случайных величин и $L=||l_{ij}||$ - квадратная матрица размером $d\times d$, в которой случайные величины $f_1,\hdots,f_d$ некоррелированы и нормированы $\mathbf{E}f_i=0,\; \mathbf{D}f_i=1,\;i=1,\hdots,d$; всегда для простоты предполагается, что $\mathbf{E}x_i=0,\;i=1,\hdots,d$. В этом случае дисперсия выражается как $$\mathbf{D}x_i=l_{i1}^2+\cdots+l_{id}^2,\quad i=1,\hdots, d$$
+Следовательно, суммарная дисперсия $\{x_i\}_{i=1}^d$ равна 
+\begin{equation}\label{summa}
+\sum\limits_{i=1}^d\mathbf{D}x_i=\sum\limits_{i=1}^dl_{i1}^2+\cdots+\sum\limits_{i=1}^dl_{id}^2
+\end{equation}
+Отыскание представления (\ref{preobr}) эквивалентно определению $d$ таких нормированных линейных комбинаций $y_1,\dots,y_d$ переменных $x_1,\dots,x_d$ (т.е. сумма квадратов коэффициентов равна 1), что для каждого $k=1,\dots,d\;y_k$ имеет наибольшую дисперсию среди всех нормированных линейных комбинаций при условии некоррелированности с предыдущими комбинациями $y_1,\dots,y_{k-1}$. Такие линейные комбинации $y_1,\dots,y_d$ называются \textit{главными компонентами} системы случайных величин $x_1,\dots,x_d$.
+\subsection{Алгоритм}
+Пусть дана $d\;-$ мерная выборка $\left(X_1,\hdots,X_n\right)$. 
+\begin{enumerate}
+    \item  Составим матрицу
+\begin{equation}
+    X=\begin{bmatrix}
+    x_1^1&\hdots&x_n^1\\
+    x_1^2&\hdots&x_n^2\\
+    \hdots&\hdots&\hdots\\
+    x_1^d&\hdots&x_n^d\\
+    \end{bmatrix}
+\end{equation}
+    \item Построим ковариационную матрицу
+    \begin{equation}
+        C=\dfrac{1}{n-1}XX^T.
+    \end{equation}
+    \item $C$ диагонализуемая, то есть представима в виде
+    \begin{equation}
+        C = P^T \Lambda P,
+    \end{equation}
+    где $P^T$ есть ортонормированная матрица, содержащая собственные векторы матрицы $C$, или \textit{главные компоненты}, а $\Lambda$ - диагональная матрица, содержащая соответствующие главным компонентам собственные числа матрицы $C$. Причем, $\lambda_1 \geq \lambda_2 \geq ... \geq \lambda_d > 0$, и $\lambda_i$ есть вклад компоненты $f_i$ в суммарную дисперсию $x_1 ... x_d$, равную в силу \eqref{summa} $\lambda_1 + ... + \lambda_d  = tr(\Lambda)$
+    \item Для проекции $X$ на множество главных компонент с индексами $i_1,...i_k$ составим матрицу $P$, столбцами которой будут являться собственые вектора $v_{i_1},...,v_{i_k}$. Тогда проекцией $X$ на множество главных компонент с индексами $i_1,...i_k$ будет являться
+    \begin{equation}
+        Y=PX.
+    \end{equation}
+\end{enumerate}
+
+\section{Реализация}
+Лабораторная работа выполнена на языке Python в среде PyCharm с использованием библиотек numpy, matplotlib.pyplot. Метод главных компонент был взят из модуля decomposition библиотеки sklearn.
+
+Научным руководителем предоставлено 30 образцов исходных данных \\«Hexane_extr_Kivu_Lake» и 2 научные статьи: \cite{article1}, \cite{article2}. 
+\section{Результаты}
+\subsection{Примеры образцов}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=8.0cm]{src/Figure_1.png}
+    \includegraphics[width=8.0cm]{src/Figure_3.png}
+    \includegraphics[width=8.0cm]{src/Figure_6.png}
+    \includegraphics[width=8.0cm]{src/Figure_8.png}
+    \caption{Несколько исходных образцов}
+    \label{fig:samples}
+\end{figure}
+Исходные данные включают в себя 30 образцов, 4 из которых для примера изображены на рис. \ref{fig:samples}. Как видим, на всех графиках присутствует шум - две полосы резких пиков. Чтобы убрать данные выбросы из исходных данных, был применен медианный фильтр с размером окна $(10, 4)$. В результате этой операции приведенные на \ref{fig:samples} образцы преобразованы следующим образом:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=8.0cm]{src/Figure_1_f.png}
+    \includegraphics[width=8.0cm]{src/Figure_3_f.png}
+    \includegraphics[width=8.0cm]{src/Figure_6_f.png}
+    \includegraphics[width=8.0cm]{src/Figure_8_f.png}
+    \caption{Сглаженные исходные образцы}
+    \label{fig:samples_filtered}
+\end{figure}
+Как видим, характер и количество экстремумов (исключая описанный шум) было сохранено.
+
+По итогам применения метода главных компонент были получены следующие результаты:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=15.0cm]{src/hist.png}
+    \caption{Гистограмма распределения дисперсий по компонентам}
+    \label{fig:hist}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=8.0cm]{src/comp1_fig.png}
+    \includegraphics[width=8.0cm]{src/comp_1.png}
+    \caption{График первой полученной компоненты}
+    \label{fig:comp_1}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=8.0cm]{src/comp2_fig.png}
+    \includegraphics[width=8.0cm]{src/comp_2.png}
+    \caption{График второй полученной компоненты}
+    \label{fig:comp_2}
+\end{figure}
+Отметим области максимальной дисперсии на рассмтариваемых главных компонентах для сопоставления их с областями из рис. 7, \cite{article1}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=13.0cm]{src/comp1_marked.png}
+    \caption{Разбиение главной компоненты 1 на области}
+    \label{fig:comp1_marked}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=13.0cm]{src/comp2_marked.png}
+    \caption{Разбиение главной компоненты 2 на области}
+    \label{fig:comp2_marked}
+\end{figure}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|}
+        \hline
+        Номер области & Сопоставленное из \cite{article1} вещество\\
+        \hline  
+        1&Protein-like containing Tryptophan\\
+        \hline
+        2&Tryptophan and Protein-like Related to Biological\\
+        \hline
+        3&Humic acid-like\\
+        \hline
+        4&Marine humic acids\\
+        \hline
+        5&Humic acid-like\\
+        \hline
+        6&Humic acid-like\\
+        \hline
+    \end{tabular}
+    \caption{Сопоставление областей с данными}
+    \label{tab:marked_regions}
+\end{table}
+\section{Обсуждение}
+\begin{enumerate}
+    \item Из гистограммы (рис. \ref{fig:hist}) видно, что первая компонента покрывает примерно 90\% дисперсии исходных данных. Первые две рассмотренные компоненты покрывают почти все 100\% дисперсии;
+    \item Максимумы на рис. \ref{fig:comp_1} и рис. \ref{fig:comp_2} обозначают области, в которых дисперсия данных среди  представленных образцов максимальна. Некоторым из этих максимумов удалось сопоставить вещества  из статьи \cite{article1} (табл. \ref{tab:marked_regions}), однако область глобального максимума в первой компоненте не удалось соотнести ни с какой аминокислотой в \cite{article1};
+    \item Рельеф первой главной компоненты в целом похож на большую часть исходных данных (например, можно визуально сопоставить рис. \ref{fig:comp_1} и первые три образца из рис. \ref{fig:samples_filtered}).
+\end{enumerate}
+\section*{Исходный код}
+С исходным кодом программы и отчета можно ознакомиться в репозитории \url{https://github.com/Stasychbr/MatStat}.
+\begin{thebibliography}{9}
+\bibitem[1]{book1} 
+ Максимов Ю.Д. Математика. Теория и практика по математической статистике. Конспект-справочник по теории вероятностей : учеб. пособие /
+Ю.Д. Максимов; под ред. В.И. Антонова. $-$ СПб. : Изд-во Политехн.
+ун-та, 2009. $-$ 395 с. (Математика в политехническом университете).
+\bibitem[2]{book2}
+Ивченко Г.И., Медведев Ю.И. Математическая статистика: Учебник. — М.: Издательство ЛКИ, 2014. — 352 с. 
+\bibitem[3]{book3}
+Айвазян, Бухштабер, Енюков, Мешалкин. Прикладная Статистика. Классификация и снижение размерности. - М.: Финансы и статистика, 1989. - 607 с.
+\bibitem[4]{article1}
+Chen W., Westerhoff P., Leenheer J.A., Booksh K. Fluorescence Excitation-Emission
+Matrix Regional Integration to
+Quantify Spectra for Dissolved
+Organic Matter // Environ. Sci. Technol. 2003, 37, p. 5701-5710
+\bibitem[5]{article2}
+Semenov P.B., et al. Methane and Dissolved Organic Matter in the Ground Ice Samples from Central Yamal: Implications to Biogeochemical Cycling and Greenhouse Gas Emission. // Geosciences. 2020: 450 с.
+\bibitem[6]{article3}
+Dramichanin T., Ackovich L.L., Zekovich I., Dramichanin M. D. Detection of Adulterated Honey by Fluorescence
+Excitation-Emission Matrices // Hindawi Journal of Spectroscopy
+Volume 2018, Article ID 8395212, 6 p.
+\end{thebibliography}
+\end{document}
