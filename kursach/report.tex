@@ -43,6 +43,8 @@
 \fancyhead{}
 \fancyfoot{}
 \fancyfoot[R]{\thepage}
+\documentclass[a4paper]{article}
+\input{header}
 \begin{document}
 \large
 \begin{center}
@@ -119,66 +121,94 @@
         Y=PX.
     \end{equation}
 \end{enumerate}
-
+\subsection{Описание прикладной области}
+На объект подается излучение частотой от видимого спектра до ультрафиолета. Излучение поглащается молекулами, которые, в свою очередь, излучали свет с некоторой частотой. Варируя частоту подаваемого излучения, строятся графики ответного излучения (частота + интенсивность). Предлагается построить главные компоненты данных, представленных руководителем, выделить в них максимумы, проанализировать их расположение на соответствие некоторой аминокислоте с помощью табл. \ref{tab:amino} и сравнить результаты для двух пакетов данных.
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+         Название&Excitation&Emission  \\
+         \hline
+         Humic acid-like&320-350&420-480\\
+         \hline
+         Humic acid-like&250-260&380-420\\
+         \hline
+         Mariane humic acids&310-320&380-420\\
+         \hline
+         Protein-like containing Tryptophan&270-280&300-320\\
+         \hline
+         Tryptophan and Protein-like Related to Biological&270-280&320-350\\
+         \hline
+    \end{tabular}
+    \caption{Таблица аминокислот из \cite{article1}}
+    \label{tab:amino}
+\end{table}
+Данные были собраны на озере Киву (Восточная Африка, одно из Великих Африканских озёр).
+\begin{figure}[H]
+    \centering
+    \includegraphics[height=15cm]{src/kivu.png}
+    \caption{Географическое расположение области сбора данных}
+    \label{fig:kivu}
+\end{figure}
 \section{Реализация}
 Лабораторная работа выполнена на языке Python в среде PyCharm с использованием библиотек numpy, matplotlib.pyplot. Метод главных компонент был взят из модуля decomposition библиотеки sklearn.
 
-Научным руководителем предоставлено 30 образцов исходных данных \\«Hexane_extr_Kivu_Lake» и 2 научные статьи: \cite{article1}, \cite{article2}. 
+Научным руководителем предоставлено 30 образцов исходных данных \\«Hexane_extr_Kivu_Lake», 145 образцов «Kivu_220» и 2 научные статьи: \cite{article1}, \cite{article2}. Первый пакет образцов частично входит во второй, но есть и различные семплы.
 \section{Результаты}
 \subsection{Примеры образцов}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=8.0cm]{src/Figure_1.png}
-    \includegraphics[width=8.0cm]{src/Figure_3.png}
-    \includegraphics[width=8.0cm]{src/Figure_6.png}
-    \includegraphics[width=8.0cm]{src/Figure_8.png}
+    \includesvg[width=8.0cm]{src/samp_1.svg}
+    \includesvg[width=8.0cm]{src/samp_2.svg}
+    \includesvg[width=8.0cm]{src/samp_3.svg}
+    \includesvg[width=8.0cm]{src/samp_4.svg}
     \caption{Несколько исходных образцов}
     \label{fig:samples}
 \end{figure}
-Исходные данные включают в себя 30 образцов, 4 из которых для примера изображены на рис. \ref{fig:samples}. Как видим, на всех графиках присутствует шум - две полосы резких пиков. Чтобы убрать данные выбросы из исходных данных, был применен медианный фильтр с размером окна $(10, 4)$. В результате этой операции приведенные на \ref{fig:samples} образцы преобразованы следующим образом:
+4 образца исходных данных для примера изображены на рис. \ref{fig:samples}. Как видим, на всех графиках присутствует шум - две полосы резких пиков. Чтобы убрать данные выбросы из исходных данных, был применен медианный фильтр с размером окна $(10, 4)$. В результате этой операции приведенные на \ref{fig:samples} образцы преобразованы следующим образом:
 \begin{figure}[H]
     \centering
-    \includegraphics[width=8.0cm]{src/Figure_1_f.png}
-    \includegraphics[width=8.0cm]{src/Figure_3_f.png}
-    \includegraphics[width=8.0cm]{src/Figure_6_f.png}
-    \includegraphics[width=8.0cm]{src/Figure_8_f.png}
+    \includesvg[width=8.0cm]{src/samp_1_filter.svg}
+    \includesvg[width=8.0cm]{src/samp_2_filter.svg}
+    \includesvg[width=8.0cm]{src/samp_3_filter.svg}
+    \includesvg[width=8.0cm]{src/samp_4_filter.svg}
     \caption{Сглаженные исходные образцы}
     \label{fig:samples_filtered}
 \end{figure}
 Как видим, характер и количество экстремумов (исключая описанный шум) было сохранено.
-
+\subsection{Пакет образцов 1}
 По итогам применения метода главных компонент были получены следующие результаты:
 \begin{figure}[H]
     \centering
-    \includegraphics[width=15.0cm]{src/hist.png}
-    \caption{Гистограмма распределения дисперсий по компонентам}
+    \includegraphics[width=10.0cm]{src/hist.png}
+    \caption{Гистограмма распределения дисперсий по компонентам, пакет 1}
     \label{fig:hist}
 \end{figure}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=8.0cm]{src/comp1_fig.png}
-    \includegraphics[width=8.0cm]{src/comp_1.png}
-    \caption{График первой полученной компоненты}
+    \includesvg[width=8.0cm]{src/fig_1.svg}
+    \includesvg[width=8.0cm]{src/comp1.svg}
+    \caption{График первой полученной компоненты, пакет 1}
     \label{fig:comp_1}
 \end{figure}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=8.0cm]{src/comp2_fig.png}
-    \includegraphics[width=8.0cm]{src/comp_2.png}
-    \caption{График второй полученной компоненты}
+    \includesvg[width=8.0cm]{src/fig_2.svg}
+    \includesvg[width=8.0cm]{src/comp2.svg}
+    \caption{График второй полученной компоненты, пакет 1}
     \label{fig:comp_2}
 \end{figure}
-Отметим области максимальной дисперсии на рассмтариваемых главных компонентах для сопоставления их с областями из рис. 7, \cite{article1}.
+Отметим области максимальной дисперсии на рассматриваемых главных компонентах для сопоставления их с областями из рис. 7, \cite{article1}.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=13.0cm]{src/comp1_marked.png}
-    \caption{Разбиение главной компоненты 1 на области}
+    \includegraphics[width=10.0cm]{src/comp1_marked.png}
+    \caption{Разбиение главной компоненты 1 на области, пакет 1}
     \label{fig:comp1_marked}
 \end{figure}
 \begin{figure}[H]
     \centering
     \includegraphics[width=13.0cm]{src/comp2_marked.png}
-    \caption{Разбиение главной компоненты 2 на области}
+    \caption{Разбиение главной компоненты 2 на области, пакет 1}
     \label{fig:comp2_marked}
 \end{figure}
 \begin{table}[H]
@@ -200,14 +230,68 @@
         6&Humic acid-like\\
         \hline
     \end{tabular}
-    \caption{Сопоставление областей с данными}
+    \caption{Сопоставление областей с данными, пакет 1}
     \label{tab:marked_regions}
+\end{table}
+\subsection{Пакет образцов 2}
+По итогам применения метода главных компонент были получены следующие результаты:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=12.0cm]{src/hist_2.png}
+    \caption{Гистограмма распределения дисперсий по компонентам, пакет 2}
+    \label{fig:hist_2}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includesvg[width=8.0cm]{src/fig1_2.svg}
+    \includesvg[width=8.0cm]{src/comp1_2.svg}
+    \caption{График первой полученной компоненты, пакет 2}
+    \label{fig:comp_1_2}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includesvg[width=8.0cm]{src/fig2_2.svg}
+    \includesvg[width=8.0cm]{src/comp2_2.svg}
+    \caption{График второй полученной компоненты, пакет 2}
+    \label{fig:comp_2_2}
+\end{figure}
+Отметим области максимальной дисперсии на рассматриваемых главных компонентах для сопоставления их с областями из рис. 7, \cite{article1}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=13.0cm]{src/comp1_2.svg_marked.png}
+    \caption{Разбиение главной компоненты 1 на области, пакет 2}
+    \label{fig:comp1_2_marked}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=13.0cm]{src/comp2_2.svg_marked.png}
+    \caption{Разбиение главной компоненты 2 на области, пакет 2}
+    \label{fig:comp2_2_marked}
+\end{figure}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|}
+        \hline
+        Номер области & Сопоставленное из \cite{article1} вещество\\
+        \hline  
+        1&Protein-like containing Tryptophan\\
+        \hline
+        2&Humic acid-like\\
+        \hline
+        3&Humic acid-like\\
+        \hline
+    \end{tabular}
+    \caption{Сопоставление областей с данными, пакет 2}
+    \label{tab:marked_regions_2}
 \end{table}
 \section{Обсуждение}
 \begin{enumerate}
-    \item Из гистограммы (рис. \ref{fig:hist}) видно, что первая компонента покрывает примерно 90\% дисперсии исходных данных. Первые две рассмотренные компоненты покрывают почти все 100\% дисперсии;
-    \item Максимумы на рис. \ref{fig:comp_1} и рис. \ref{fig:comp_2} обозначают области, в которых дисперсия данных среди  представленных образцов максимальна. Некоторым из этих максимумов удалось сопоставить вещества  из статьи \cite{article1} (табл. \ref{tab:marked_regions}), однако область глобального максимума в первой компоненте не удалось соотнести ни с какой аминокислотой в \cite{article1};
-    \item Рельеф первой главной компоненты в целом похож на большую часть исходных данных (например, можно визуально сопоставить рис. \ref{fig:comp_1} и первые три образца из рис. \ref{fig:samples_filtered}).
+    \item Из гистограмм (рис. \ref{fig:hist} и рис. \ref{fig:hist_2}) видно, что первая компонента покрывает значительное (примерно 90\% и 70\% соответственно пакетам данных) дисперсии исходных данных. Первые три рассмотренные компоненты покрывают почти все 100\% дисперсии в обоих случаях;
+    \item Максимумы на рис. \ref{fig:comp_1}, \ref{fig:comp_2}, \ref{fig:comp_1_2}, \ref{fig:comp_2_2} обозначают области, в которых дисперсия данных среди  представленных образцов максимальна. Некоторым из этих максимумов удалось сопоставить вещества  из статьи \cite{article1} (табл. \ref{tab:marked_regions}, \ref{tab:marked_regions_2}), однако область максимума в первой компоненте в окрестности точки (360, 260), присутствующую в обоих пакетах данных, не удалось соотнести ни с какой аминокислотой в \cite{article1};
+    \item Рельеф первой главной компоненты в целом похож на большую часть исходных данных (например, можно визуально сопоставить рис. \ref{fig:comp_1} и первые три образца из рис. \ref{fig:samples_filtered});
+    \item Во втором пакете данных области максимума получились более обширными и сглаженными, вероятно, из-за возросшего количества образцов. Вследствие этого не удалось во втором случае выделить столько же веществ, сколько и в первом, - для них нет локальных максимумов на рис. \ref{fig:comp_1_2};
+    \item Первые главные компоненты в обоих пакетах имеют схожий рельеф, вторые же значительно различаются;
+    \item В обоих пакетах вторая главная компонента содержит максимум в окрестности точки (460, 410) (особенно выраженный во втором пакете), который вовсе не вписывается в рассматриваемую область рис. 7 в \cite{article1}.
 \end{enumerate}
 \section*{Исходный код}
 С исходным кодом программы и отчета можно ознакомиться в репозитории \url{https://github.com/Stasychbr/MatStat}.
